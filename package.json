@@ -1,0 +1,13 @@
+{
+  "name": "letspdf",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "@vercel/node": "^1.7.1"
+  },
+  "dependencies": {
+    "@types/pdfmake": "^0.1.14",
+    "pdfmake": "^0.1.65"
+  }
+}
