@@ -57,11 +57,11 @@ const hasInvalidOptions = (body: NowRequestBody): boolean => {
 export default function errorHandling(req: NowRequest, res: NowResponse): void | true {
   const checks: IErrorChecks[] = [
     {
-      check: req?.method !== "POST",
+      check: req.method !== "POST",
       method: invalidMethod
     },
     {
-      check: req.headers?.["content-type"] !== "application/json",
+      check: req.headers["content-type"] !== "application/json",
       method: invalidContentType
     },
     {
