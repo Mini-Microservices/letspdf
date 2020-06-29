@@ -1,11 +1,11 @@
 import { NowRequest, NowResponse } from '@vercel/node'
 import PdfPrinter from "pdfmake"
 import fonts from "../lib/fonts"
-import { TDocumentDefinitions, BufferOptions } from 'pdfmake/interfaces'
 import {Base64Encode} from 'base64-stream'
 import asyncStream from '../lib/asyncStream'
 import response from '../lib/response'
 import errorHandling from '../lib/errors'
+import getOptions from '../lib/getOptions'
 
 /**
  * Endpoint to generate the pdf document
@@ -26,15 +26,12 @@ export default async function(req: NowRequest, res: NowResponse) {
     if (!errorHandling(req, res)) return
 
     const printer = new PdfPrinter(fonts)
-    const docDefinition: TDocumentDefinitions = {
-      content: [
-        'First paragraph',
-        'Another paragraph, this time a little bit longer to make sure, this line will be divided into at least two lines'
-      ]
-    }
-    const options: BufferOptions = {}
+    const {
+      document: docDefinition,
+      options
+    } = req.body
 
-    const doc: PDFKit.PDFDocument = printer.createPdfKitDocument(docDefinition, options)
+    const doc: PDFKit.PDFDocument = printer.createPdfKitDocument(docDefinition, getOptions(options))
     var stream = doc.pipe(new Base64Encode())
 
     // will trigger the stream to end
