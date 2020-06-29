@@ -45,7 +45,7 @@ const hasInvalidBody = (body: NowRequestBody): boolean => {
 }
 
 const hasInvalidOptions = (body: NowRequestBody): boolean => {
-  if (typeof body?.options !== "undefined") {
+  if (body && typeof body.options !== "undefined") {
     if (!isObject(body.options)) {
       return true
     }
