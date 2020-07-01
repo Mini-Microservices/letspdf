@@ -6,6 +6,7 @@ import asyncStream from '../lib/asyncStream'
 import response from '../lib/response'
 import errorHandling from '../lib/errors'
 import getOptions from '../lib/getOptions'
+import allowCors from '../lib/allowCors'
 
 /**
  * Endpoint to generate the pdf document
@@ -16,7 +17,7 @@ import getOptions from '../lib/getOptions'
  * @param {NowRequest} req
  * @param {NowResponse} res
  */
-export default async function(req: NowRequest, res: NowResponse) {
+const handler = async (req: NowRequest, res: NowResponse) => {
   try {
     /**
      * @see https://vercel.com/docs/runtimes#official-runtimes/node-js/node-js-request-and-response-objects/request-body
@@ -50,3 +51,5 @@ export default async function(req: NowRequest, res: NowResponse) {
     response(res, err.message, 400)
   }
 }
+
+module.exports = allowCors(handler)
